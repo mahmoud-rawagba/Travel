@@ -3,10 +3,13 @@ package com.example.travel;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.editTextTextPassword);
         Button SignUpButton = (Button) findViewById(R.id.signUpbutton);
         Button LoginButton = (Button) findViewById(R.id.loginbutton);
+//        CheckBox rememberMe = (CheckBox) findViewById(R.id.checkBox);
+        TextView test = (TextView) findViewById(R.id.textView);
         SignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -27,15 +32,34 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        LoginButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
 
-        //        LoginButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+               DataBaseHelper dataBaseHelper =new
+                       DataBaseHelper(MainActivity.this,"NAME",null,1);
+               Cursor searchUser = dataBaseHelper.searchUser(email.getText().toString());
+               if(searchUser.moveToFirst()){
+//               searchUser.moveToFirst();
+//                test.setText(searchUser.getString(0));
+                   if(!searchUser.getString(1).matches(password.getText().toString())){
+                       //Password does not match user email
+                       password.setError("Password is incorrect Please try again!");
+                       password.requestFocus();
+                   }
+                   else  {
+                       test.setText("success");
+                   }
+                   }
+//               if(dataBaseHelper.searchUser(String.valueOf(email))!=null){
 //
-//            }
-//        });
-//
-//    }
+//               }
+               }
+
+
+
+        });
+
     }
 
 }

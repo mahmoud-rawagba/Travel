@@ -17,7 +17,7 @@ public class DataBaseHelper  extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE USER(Email TEXT PRIMARY KEY,Password TEXT, FirstName TEXT,LastName TEXT,Fcontinent TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE USERS(Email TEXT PRIMARY KEY,Password TEXT, FirstName TEXT,LastName TEXT,Fcontinent TEXT)");
         sqLiteDatabase.execSQL("CREATE TABLE DESTINATION(city TEXT PRIMARY KEY,country TEXT,continent TEXT,longitude REAL,latitude REAL,cost INTEGER,img TEXT,description TEXT)");
     }
 
@@ -44,11 +44,11 @@ public class DataBaseHelper  extends SQLiteOpenHelper {
         contentValues.put("FirstName", user.getFName());
         contentValues.put("LastName", user.getLName());
         contentValues.put("Fcontinent", user.getPContinent());
-        sqLiteDatabase.insert("USER", null, contentValues);
+        sqLiteDatabase.insert("USERS", null, contentValues);
     }
     public Cursor searchUser(String email) {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
-    return sqLiteDatabase.rawQuery("SELECT * FROM USERS WHERE Email=?",new String[]{email},null);
+    return sqLiteDatabase.rawQuery("SELECT * FROM  USERS WHERE Email=?",new String[]{email},null);
     }
 }
